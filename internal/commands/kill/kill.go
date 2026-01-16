@@ -18,19 +18,19 @@ var Command = &cli.Command{
 	Arguments: []cli.Argument{
 		arguments.SessionArg,
 	},
-	Action: Action,
+	Action: action,
 
 	Flags: []cli.Flag{
 		allFlag,
 	},
 }
 
-// Action handles the kill command execution
+// action handles the kill command execution
 // Supports three modes:
 // 1. --all flag: kills all tmux sessions
 // 2. No session name: kills session named after current directory
 // 3. Session name provided: kills the specified session
-func Action(_ context.Context, command *cli.Command) error {
+func action(_ context.Context, command *cli.Command) error {
 	all := command.Bool("all")
 
 	if all {

@@ -14,14 +14,14 @@ var Command = &cli.Command{
 	Name:      "git",
 	Usage:     "start a git window",
 	UsageText: "tm git",
-	Action:    Action,
+	Action:    action,
 	Flags:     []cli.Flag{},
 }
 
-// Action handles the git command execution
+// action handles the git command execution
 // Checks if in a git repository, creates a horizontal split pane,
 // and launches lazygit in the first pane
-func Action(_ context.Context, command *cli.Command) error {
+func action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 
 	if !shell.IsGitRepository() {

@@ -13,12 +13,12 @@ var Command = &cli.Command{
 	Name:      "opencode",
 	Usage:     "start a opencode window",
 	UsageText: "tm opencode",
-	Action:    Action,
+	Action:    action,
 }
 
-// Action handles the opencode command execution
+// action handles the opencode command execution
 // Renames the current window to "opencode" and starts the opencode CLI
-func Action(_ context.Context, command *cli.Command) error {
+func action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 
 	tmux.RenameWindow("opencode")

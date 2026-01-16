@@ -13,12 +13,12 @@ var Command = &cli.Command{
 	Name:      "editor",
 	Usage:     "start a editor window",
 	UsageText: "tm editor",
-	Action:    Action,
+	Action:    action,
 }
 
-// Action handles the editor command execution
+// action handles the editor command execution
 // Renames the current window to "editor" and starts nvim
-func Action(_ context.Context, command *cli.Command) error {
+func action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 
 	tmux.RenameWindow("editor")

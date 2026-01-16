@@ -14,19 +14,19 @@ var Command = &cli.Command{
 	Name:      "start",
 	Usage:     "start a tmux session",
 	UsageText: "tm start",
-	Action:    Action,
+	Action:    action,
 	Flags: []cli.Flag{
 		switchFlag,
 		auxFlag,
 	},
 }
 
-// Action handles the start command execution
+// action handles the start command execution
 // Supports three modes:
 // 1. --switch flag: switches to existing session, or starts it if not in tmux
 // 2. --aux flag: starts session named after current directory with "_aux" suffix
 // 3. Default: starts session named after current directory
-func Action(_ context.Context, command *cli.Command) error {
+func action(_ context.Context, command *cli.Command) error {
 	sessionSwitch := command.String("switch")
 
 	if sessionSwitch != "" {

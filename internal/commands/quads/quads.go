@@ -13,14 +13,14 @@ var Command = &cli.Command{
 	Name:      "quads",
 	Usage:     "start a 4x4 pane setup",
 	UsageText: "tm quads",
-	Action:    Action,
+	Action:    action,
 	Flags:     []cli.Flag{},
 }
 
-// Action handles the quads command execution
+// action handles the quads command execution
 // Creates a 4-pane layout: splits horizontally, then splits right pane vertically,
 // then returns to left pane and splits it vertically
-func Action(_ context.Context, command *cli.Command) error {
+func action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 
 	tmux.RenameWindow("shells")

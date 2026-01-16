@@ -13,11 +13,11 @@ var Command = &cli.Command{
 	Name:      "detach",
 	Usage:     "detach a tmux session",
 	UsageText: "tm detach",
-	Action:    Action,
+	Action:    action,
 }
 
-// Action handles the detach command execution
-func Action(_ context.Context, command *cli.Command) error {
+// action handles the detach command execution
+func action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 	tmux.DetachFromSession()
 	return nil
