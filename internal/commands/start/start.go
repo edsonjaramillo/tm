@@ -9,6 +9,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+// Command defines the start command configuration
 var Command = &cli.Command{
 	Name:      "start",
 	Usage:     "start a tmux session",
@@ -20,10 +21,14 @@ var Command = &cli.Command{
 	},
 }
 
+// Action handles the start command execution
+// Supports three modes:
+// 1. --switch flag: switches to existing session, or starts it if not in tmux
+// 2. --aux flag: starts session named after current directory with "_aux" suffix
+// 3. Default: starts session named after current directory
 func Action(_ context.Context, command *cli.Command) error {
 	sessionSwitch := command.String("switch")
 
-	// If switch flag is provided, switch to that session
 	if sessionSwitch != "" {
 		if !tmux.CheckIfSessionExists(sessionSwitch) {
 			shell.Exit("Session " + sessionSwitch + " does not exist")
@@ -37,27 +42,25 @@ func Action(_ context.Context, command *cli.Command) error {
 		}
 	}
 
-	// Get basename of current directory and check if a tmux session with that name exists
 	basename := shell.GetBasenamePWD()
 
-	// If aux flag is provided, append _aux to the basename
-	// aux session is used for having a secondary session for the same project
 	isAux := command.Bool("aux")
 	if isAux {
 		basename = basename + "_aux"
 	}
-	// Start a new session with the basename
 	tmux.StartSession(basename)
 
 	return nil
 }
 
+// switchFlag defines the --switch flag to switch to a session
 var switchFlag = &cli.StringFlag{
 	Name:     "switch",
 	Usage:    "Switch to the session if already inside a tmux session",
 	OnlyOnce: true,
 }
 
+// auxFlag defines the --aux flag for creating an auxiliary session
 var auxFlag = &cli.BoolFlag{
 	Name:     "aux",
 	Usage:    "Auxiliary flag for secondary session",

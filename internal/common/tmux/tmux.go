@@ -12,23 +12,29 @@ import (
 )
 
 // Session Functions
+
+// StartSession creates or attaches to a tmux session with the given name
 func StartSession(name string) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "new-session", "-A", "-s", name)
 }
 
+// KillSession terminates the specified tmux session
 func KillSession(name string) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "kill-session", "-t", name)
 }
 
+// KillAllSessions terminates the tmux server and all sessions
 func KillAllSessions() *exec.Cmd {
 	return shell.CmdInteractive("tmux", "kill-server")
 }
 
+// SwitchSession switches the current client to the specified session
 func SwitchSession(session string) *exec.Cmd {
 	name := session + ":1"
 	return shell.CmdInteractive("tmux", "switch-client", "-t", name)
 }
 
+// ListSessions returns a list of all tmux session names and their count
 func ListSessions() ([]string, int) {
 	cmd := shell.Cmd("tmux", "list-sessions", "-F", "#S")
 	output, err := cmd.CombinedOutput()
@@ -41,14 +47,17 @@ func ListSessions() ([]string, int) {
 	return sessions, len(sessions)
 }
 
+// DetachFromSession detaches the current client from the session
 func DetachFromSession() *exec.Cmd {
 	return shell.CmdInteractive("tmux", "detach-client")
 }
 
+// RenameSession renames the current session to the new name
 func RenameSession(newName string) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "rename-session", newName)
 }
 
+// GetSessionName returns the name of the current tmux session
 func GetSessionName() string {
 	cmd := shell.Cmd("tmux", "display-message", "-p", "#S")
 	output, err := cmd.CombinedOutput()
@@ -59,6 +68,7 @@ func GetSessionName() string {
 	return outputCleaner(output, "\n")[0]
 }
 
+// GetWindowIndex returns the index of the current window
 func GetWindowIndex() string {
 	cmd := shell.Cmd("tmux", "display-message", "-p", "#I")
 	output, err := cmd.CombinedOutput()
@@ -68,6 +78,7 @@ func GetWindowIndex() string {
 	return outputCleaner(output, "\n")[0]
 }
 
+// ExitIfNotInSession exits if the TMUX environment variable is set
 func ExitIfNotInSession() {
 	_, found := os.LookupEnv("TMUX")
 	if found {
@@ -75,6 +86,7 @@ func ExitIfNotInSession() {
 	}
 }
 
+// AllowIfInSession exits if not currently in a tmux session
 func AllowIfInSession() {
 	_, found := os.LookupEnv("TMUX")
 	if !found {
@@ -82,11 +94,13 @@ func AllowIfInSession() {
 	}
 }
 
+// CheckIfInSession returns true if currently in a tmux session
 func CheckIfInSession() bool {
 	_, found := os.LookupEnv("TMUX")
 	return found
 }
 
+// CheckIfSessionExists returns true if a session with the given name exists
 func CheckIfSessionExists(name string) bool {
 	cmd := shell.Cmd("tmux", "has-session", "-t", name)
 	err := cmd.Run()
@@ -94,10 +108,13 @@ func CheckIfSessionExists(name string) bool {
 }
 
 // Window Functions
+
+// NewWindow creates a new tmux window with the specified name
 func NewWindow(name string) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "new-window", "-n", name)
 }
 
+// SplitWindow splits the current pane in the specified direction (-h for horizontal, -v for vertical)
 func SplitWindow(direction string) *exec.Cmd {
 	if direction != "-h" && direction != "-v" {
 		shell.Exit("Invalid direction for split window. Use -h or -v.")
@@ -106,11 +123,14 @@ func SplitWindow(direction string) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "split-window", direction)
 }
 
+// RenameWindow renames the current window to the new name
 func RenameWindow(newName string) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "rename-window", newName)
 }
 
 // Pane Functions
+
+// GetPanesInSession returns a sorted list of pane IDs in the specified session and window
 func GetPanesInSession(session string, window string) []int {
 	target := session + ":" + window
 	cmd := shell.Cmd("tmux", "list-panes", "-t", target, "-F", "#P")
@@ -139,16 +159,20 @@ func GetPanesInSession(session string, window string) []int {
 	return numberedPanes
 }
 
+// SelectPane selects the pane with the specified ID
 func SelectPane(pane int) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "select-pane", "-t", strconv.Itoa(pane))
 }
 
 // Misc Functions
+
+// SendKeys simulates typing the specified keys into the current pane
 func SendKeys(keys ...string) *exec.Cmd {
 	args := append([]string{"send-keys"}, keys...)
 	return shell.CmdInteractive("tmux", args...)
 }
 
+// outputCleaner splits command output by delimiter and removes empty strings
 func outputCleaner(output []byte, delimiter string) []string {
 	splits := strings.Split(string(output), delimiter)
 	lines := []string{}

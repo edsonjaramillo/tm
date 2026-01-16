@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+// Command defines the quads command configuration
 var Command = &cli.Command{
 	Name:      "quads",
 	Usage:     "start a 4x4 pane setup",
@@ -16,6 +17,9 @@ var Command = &cli.Command{
 	Flags:     []cli.Flag{},
 }
 
+// Action handles the quads command execution
+// Creates a 4-pane layout: splits horizontally, then splits right pane vertically,
+// then returns to left pane and splits it vertically
 func Action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 

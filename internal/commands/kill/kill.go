@@ -10,6 +10,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+// Command defines the kill command configuration
 var Command = &cli.Command{
 	Name:      "kill",
 	Usage:     "kill a tmux session",
@@ -24,13 +25,15 @@ var Command = &cli.Command{
 	},
 }
 
+// Action handles the kill command execution
+// Supports three modes:
+// 1. --all flag: kills all tmux sessions
+// 2. No session name: kills session named after current directory
+// 3. Session name provided: kills the specified session
 func Action(_ context.Context, command *cli.Command) error {
 	all := command.Bool("all")
 
-	// If --all flag is provided delete all tmux sessions
 	if all {
-		// Check if there are any tmux sessions
-		// If there are none, exit with error
 		_, numberOfSessions := tmux.ListSessions()
 		if numberOfSessions == 0 {
 			shell.Exit("No tmux sessions to kill")
@@ -39,15 +42,12 @@ func Action(_ context.Context, command *cli.Command) error {
 		return nil
 	}
 
-	// If no session is provided
 	session := command.StringArg("session")
 	if session == "" {
 		tmux.AllowIfInSession()
 
-		// Get basename of current directory and check if a tmux session with that name exists
 		basename := shell.GetBasenamePWD()
 
-		// If it does not exist, exit with error
 		if !tmux.CheckIfSessionExists(basename) {
 			shell.Exit(basename + " session does not exist")
 		}
@@ -56,7 +56,6 @@ func Action(_ context.Context, command *cli.Command) error {
 		return nil
 	}
 
-	// Check if the session provided exists
 	if !tmux.CheckIfSessionExists(session) {
 		shell.Exit("Session " + session + " does not exist")
 	}
@@ -66,6 +65,7 @@ func Action(_ context.Context, command *cli.Command) error {
 	return nil
 }
 
+// allFlag defines the --all flag to kill all sessions
 var allFlag = &cli.BoolFlag{
 	Name:     "all",
 	Usage:    "kill all tmux sessions",

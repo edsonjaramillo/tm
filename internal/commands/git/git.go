@@ -9,6 +9,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+// Command defines the git command configuration
 var Command = &cli.Command{
 	Name:      "git",
 	Usage:     "start a git window",
@@ -17,6 +18,9 @@ var Command = &cli.Command{
 	Flags:     []cli.Flag{},
 }
 
+// Action handles the git command execution
+// Checks if in a git repository, creates a horizontal split pane,
+// and launches lazygit in the first pane
 func Action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 

@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+// Command defines the detach command configuration
 var Command = &cli.Command{
 	Name:      "detach",
 	Usage:     "detach a tmux session",
@@ -15,6 +16,7 @@ var Command = &cli.Command{
 	Action:    Action,
 }
 
+// Action handles the detach command execution
 func Action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 	tmux.DetachFromSession()

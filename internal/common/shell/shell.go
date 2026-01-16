@@ -7,12 +7,14 @@ import (
 	"strings"
 )
 
+// Cmd creates a new command without interactive I/O
 func Cmd(name string, args ...string) *exec.Cmd {
 	cmd := exec.Command(name, args...)
 
 	return cmd
 }
 
+// CmdInteractive creates a new command with stdin/stdout connected to the terminal
 func CmdInteractive(name string, args ...string) *exec.Cmd {
 	cmd := exec.Command(name, args...)
 
@@ -27,6 +29,7 @@ func CmdInteractive(name string, args ...string) *exec.Cmd {
 	return cmd
 }
 
+// GetBasenamePWD returns the basename of the current working directory
 func GetBasenamePWD() string {
 	pwd, err := os.Getwd()
 	if err != nil {
@@ -38,16 +41,18 @@ func GetBasenamePWD() string {
 	return pathParts[len(pathParts)-1]
 }
 
-// fmt.println with red text
+// Exit prints a red error message and exits with status 1
 func Exit(message string) {
 	fmt.Println("\033[31m" + message + "\033[0m")
 	os.Exit(1)
 }
 
+// Success exits with status 0
 func Success() {
 	os.Exit(0)
 }
 
+// IsGitRepository checks if the current directory is a git repository
 func IsGitRepository() bool {
 	cmd := Cmd("git", "rev-parse", "--is-inside-work-tree")
 	err := cmd.Run()

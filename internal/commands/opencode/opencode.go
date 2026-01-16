@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+// Command defines the opencode command configuration
 var Command = &cli.Command{
 	Name:      "opencode",
 	Usage:     "start a opencode window",
@@ -15,6 +16,8 @@ var Command = &cli.Command{
 	Action:    Action,
 }
 
+// Action handles the opencode command execution
+// Renames the current window to "opencode" and starts the opencode CLI
 func Action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 
