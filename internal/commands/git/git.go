@@ -15,7 +15,6 @@ var Command = &cli.Command{
 	Usage:     "start a git window",
 	UsageText: "tm git",
 	Action:    action,
-	Flags:     []cli.Flag{},
 }
 
 // action handles the git command execution

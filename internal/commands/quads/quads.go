@@ -14,7 +14,6 @@ var Command = &cli.Command{
 	Usage:     "start a 4x4 pane setup",
 	UsageText: "tm quads",
 	Action:    action,
-	Flags:     []cli.Flag{},
 }
 
 // action handles the quads command execution

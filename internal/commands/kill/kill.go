@@ -19,7 +19,6 @@ var Command = &cli.Command{
 		arguments.SessionArg,
 	},
 	Action: action,
-
 	Flags: []cli.Flag{
 		allFlag,
 	},
