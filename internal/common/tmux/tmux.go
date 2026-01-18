@@ -27,12 +27,6 @@ func KillAllSessions() *exec.Cmd {
 	return shell.CmdInteractive("tmux", "kill-server")
 }
 
-// SwitchSession switches the current client to the specified session
-func SwitchSession(session string) *exec.Cmd {
-	name := session + ":1"
-	return shell.CmdInteractive("tmux", "switch-client", "-t", name)
-}
-
 // ListSessions returns a list of all tmux session names and their count
 func ListSessions() ([]string, int) {
 	cmd := shell.Cmd("tmux", "list-sessions", "-F", "#S")
