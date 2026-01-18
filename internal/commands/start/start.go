@@ -29,8 +29,14 @@ func action(_ context.Context, command *cli.Command) error {
 
 	isAux := command.Bool("aux")
 	if isAux {
-		basename = basename + "_aux"
+		if !tmux.CheckIfSessionExists(basename) {
+			shell.Exit("No target session named '" + basename + "' found for auxiliary session.")
+		}
+
+		tmux.StartAuxSession(basename, basename+"_aux")
+		return nil
 	}
+
 	tmux.StartSession(basename)
 
 	return nil

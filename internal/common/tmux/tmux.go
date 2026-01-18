@@ -17,6 +17,10 @@ func StartSession(name string) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "new-session", "-A", "-s", name)
 }
 
+func StartAuxSession(target string, name string) *exec.Cmd {
+	return shell.CmdInteractive("tmux", "new-session", "-A", "-s", name, "-t", target)
+}
+
 // KillSession terminates the specified tmux session
 func KillSession(name string) *exec.Cmd {
 	return shell.CmdInteractive("tmux", "kill-session", "-t", name)
