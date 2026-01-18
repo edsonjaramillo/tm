@@ -3,6 +3,7 @@ package quads
 import (
 	"context"
 
+	"edsonjaramillo/tm/internal/common/flags"
 	"edsonjaramillo/tm/internal/common/tmux"
 
 	"github.com/urfave/cli/v3"
@@ -14,6 +15,9 @@ var Command = &cli.Command{
 	Usage:     "start a 4x4 pane setup",
 	UsageText: "tm quads",
 	Action:    action,
+	Flags: []cli.Flag{
+		flags.NewFlag,
+	},
 }
 
 // action handles the quads command execution
@@ -22,7 +26,12 @@ var Command = &cli.Command{
 func action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 
-	tmux.RenameWindow("shells")
+	needsNewWindow := command.Bool("new")
+	if needsNewWindow {
+		tmux.NewWindow("shells")
+	} else {
+		tmux.RenameWindow("shells")
+	}
 
 	tmux.SplitWindow("-h")
 	tmux.SplitWindow("-v")

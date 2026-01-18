@@ -3,6 +3,7 @@ package git
 import (
 	"context"
 
+	"edsonjaramillo/tm/internal/common/flags"
 	"edsonjaramillo/tm/internal/common/shell"
 	"edsonjaramillo/tm/internal/common/tmux"
 
@@ -15,6 +16,9 @@ var Command = &cli.Command{
 	Usage:     "start a git window",
 	UsageText: "tm git",
 	Action:    action,
+	Flags: []cli.Flag{
+		flags.NewFlag,
+	},
 }
 
 // action handles the git command execution
@@ -25,6 +29,13 @@ func action(_ context.Context, command *cli.Command) error {
 
 	if !shell.IsGitRepository() {
 		shell.Exit("Git repository not found in PWD")
+	}
+
+	needsNewWindow := command.Bool("new")
+	if needsNewWindow {
+		tmux.NewWindow("git")
+	} else {
+		tmux.RenameWindow("git")
 	}
 
 	tmux.SplitWindow("-h")

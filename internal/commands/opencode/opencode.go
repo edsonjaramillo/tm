@@ -3,6 +3,7 @@ package opencode
 import (
 	"context"
 
+	"edsonjaramillo/tm/internal/common/flags"
 	"edsonjaramillo/tm/internal/common/tmux"
 
 	"github.com/urfave/cli/v3"
@@ -14,6 +15,9 @@ var Command = &cli.Command{
 	Usage:     "start a opencode window",
 	UsageText: "tm opencode",
 	Action:    action,
+	Flags: []cli.Flag{
+		flags.NewFlag,
+	},
 }
 
 // action handles the opencode command execution
@@ -21,7 +25,12 @@ var Command = &cli.Command{
 func action(_ context.Context, command *cli.Command) error {
 	tmux.AllowIfInSession()
 
-	tmux.RenameWindow("opencode")
+	needsNewWindow := command.Bool("new")
+	if needsNewWindow {
+		tmux.NewWindow("opencode")
+	} else {
+		tmux.RenameWindow("opencode")
+	}
 
 	tmux.SendKeys("opencode", "C-m")
 
