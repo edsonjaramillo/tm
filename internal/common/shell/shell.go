@@ -47,11 +47,6 @@ func Exit(message string) {
 	os.Exit(1)
 }
 
-// Success exits with status 0
-func Success() {
-	os.Exit(0)
-}
-
 // IsGitRepository checks if the current directory is a git repository
 func IsGitRepository() bool {
 	cmd := Cmd("git", "rev-parse", "--is-inside-work-tree")
