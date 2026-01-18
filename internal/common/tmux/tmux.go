@@ -1,7 +1,6 @@
 package tmux
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"sort"
@@ -151,10 +150,6 @@ func GetPanesInSession(session string, window string) []int {
 	}
 
 	sort.Ints(numberedPanes)
-
-	for _, pane := range numberedPanes {
-		fmt.Println("Found pane:", pane)
-	}
 
 	return numberedPanes
 }
