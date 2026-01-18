@@ -38,11 +38,6 @@ func action(_ context.Context, command *cli.Command) error {
 		tmux.RenameWindow("git")
 	}
 
-	tmux.SplitWindow("-h")
-
-	firstPane := tmux.GetPanesInSession(tmux.GetSessionName(), tmux.GetWindowIndex())[0]
-	tmux.SelectPane(firstPane)
-
 	tmux.SendKeys("lazygit", "C-m")
 
 	return nil
