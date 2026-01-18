@@ -44,10 +44,6 @@ tasks:
     cmds:
       - go run {{.MAIN}} git
     silent: true
-  kill:
-    cmds:
-      - go run {{.MAIN}} kill
-    silent: true
   kill-all:
     cmds:
       - go run {{.MAIN}} kill --all

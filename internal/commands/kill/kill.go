@@ -27,8 +27,7 @@ var Command = &cli.Command{
 // action handles the kill command execution
 // Supports three modes:
 // 1. --all flag: kills all tmux sessions
-// 2. No session name: kills session named after current directory
-// 3. Session name provided: kills the specified session
+// 2. Session name provided: kills the specified session
 func action(_ context.Context, command *cli.Command) error {
 	all := command.Bool("all")
 
@@ -43,16 +42,7 @@ func action(_ context.Context, command *cli.Command) error {
 
 	session := command.StringArg("session")
 	if session == "" {
-		tmux.AllowIfInSession()
-
-		basename := shell.GetBasenamePWD()
-
-		if !tmux.CheckIfSessionExists(basename) {
-			shell.Exit(basename + " session does not exist")
-		}
-
-		tmux.KillSession(basename)
-		return nil
+		shell.Exit("Please provide a session name or use the --all flag to kill all sessions")
 	}
 
 	if !tmux.CheckIfSessionExists(session) {
