@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"edsonjaramillo/tm/internal/domain"
+	"github.com/edsonjaramillo/tm/internal/domain"
 )
 
 // Tmux implements ports.Tmux by shelling out to tmux.

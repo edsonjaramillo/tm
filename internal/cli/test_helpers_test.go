@@ -1,6 +1,6 @@
 package cli
 
-import "edsonjaramillo/tm/internal/app"
+import "github.com/edsonjaramillo/tm/internal/app"
 
 type fakeUseCases struct {
 	startReq app.StartRequest

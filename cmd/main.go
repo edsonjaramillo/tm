@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"edsonjaramillo/tm/internal/cli"
+	"github.com/edsonjaramillo/tm/internal/cli"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module edsonjaramillo/tm
+module github.com/edsonjaramillo/tm
 
 go 1.25.5
 

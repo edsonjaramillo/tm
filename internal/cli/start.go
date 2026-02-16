@@ -3,7 +3,7 @@ package cli
 import (
 	"strings"
 
-	"edsonjaramillo/tm/internal/app"
+	"github.com/edsonjaramillo/tm/internal/app"
 
 	"github.com/spf13/cobra"
 )

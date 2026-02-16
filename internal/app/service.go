@@ -3,8 +3,8 @@ package app
 import (
 	"strings"
 
-	"edsonjaramillo/tm/internal/domain"
-	"edsonjaramillo/tm/internal/ports"
+	"github.com/edsonjaramillo/tm/internal/domain"
+	"github.com/edsonjaramillo/tm/internal/ports"
 )
 
 // UseCases defines the application operations exposed to the CLI transport.

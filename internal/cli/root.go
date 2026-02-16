@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	execadapter "edsonjaramillo/tm/internal/adapters/exec"
-	"edsonjaramillo/tm/internal/app"
+	execadapter "github.com/edsonjaramillo/tm/internal/adapters/exec"
+	"github.com/edsonjaramillo/tm/internal/app"
 
 	"github.com/spf13/cobra"
 )

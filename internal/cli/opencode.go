@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"edsonjaramillo/tm/internal/app"
+	"github.com/edsonjaramillo/tm/internal/app"
 
 	"github.com/spf13/cobra"
 )
