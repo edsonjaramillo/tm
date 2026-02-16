@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev
+version: '3'
+vars:
+  MAIN: cmd/main.go
+  BIN_DIR: ~/.local/bin
+  EXECUTABLE: tm
+  VERSION: dev
+tasks:
+  default:
+    cmds:
+      - go run {{.MAIN}}
+    silent: true
+  build:
+    cmds:
+      - mkdir -p {{.BIN_DIR}}
+      - go build -ldflags="-s -w" -o {{.BIN_DIR}}/{{.EXECUTABLE}} {{.MAIN}}
+    silent: true
+  lint:
+    cmds:
+      - golangci-lint run ./...
+    silent: true
+  start:
+    cmds:
+      - go run {{.MAIN}} start
+    silent: true
+  detach:
+    cmds:
+      - go run {{.MAIN}} detach
+    silent: true
+  editor:
+    cmds:
+      - go run {{.MAIN}} editor
+    silent: true
+  opencode:
+    cmds:
+      - go run {{.MAIN}} opencode
+    silent: true
+  claude:
+    cmds:
+      - go run {{.MAIN}} claude
+    silent: true
+  codex:
+    cmds:
+      - go run {{.MAIN}} codex
+    silent: true
+  quads:
+    cmds:
+      - go run {{.MAIN}} quads
+    silent: true
+  dual:
+    cmds:
+      - go run {{.MAIN}} dual
+    silent: true
+  git:
+    cmds:
+      - go run {{.MAIN}} git
+    silent: true
+  kill-all:
+    cmds:
+      - go run {{.MAIN}} kill --all
+    silent: true
