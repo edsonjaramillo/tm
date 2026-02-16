@@ -11,7 +11,7 @@ import (
 )
 
 // Version is the CLI version string set at build time via ldflags.
-var Version = "0.1.0"
+var Version = "dev"
 
 // Execute constructs and runs the root CLI command tree.
 func Execute() error {

@@ -8,55 +8,55 @@ vars:
   VERSION: dev
 tasks:
   default:
-    cmds:
-      - go run {{.MAIN}}
+    cmd: go run {{.MAIN}} {{.CLI_ARGS}}
     silent: true
   build:
     cmds:
       - mkdir -p {{.BIN_DIR}}
-      - go build -ldflags="-s -w" -o {{.BIN_DIR}}/{{.EXECUTABLE}} {{.MAIN}}
+      - go build -ldflags="-s -w -X edsonjaramillo/tm/internal/cli.Version={{.VERSION}}" -o {{.BIN_DIR}}/{{.EXECUTABLE}} {{.MAIN}}
+    silent: true
+  test:
+    cmd: go test ./...
+    silent: true
+  format:
+    cmd: gofumpt -w .
     silent: true
   lint:
-    cmds:
-      - golangci-lint run ./...
+    cmd: golangci-lint run ./...
     silent: true
   start:
-    cmds:
-      - go run {{.MAIN}} start
+    cmd: go run {{.MAIN}} start {{.CLI_ARGS}}
     silent: true
   detach:
-    cmds:
-      - go run {{.MAIN}} detach
+    cmd: go run {{.MAIN}} detach {{.CLI_ARGS}}
     silent: true
   editor:
-    cmds:
-      - go run {{.MAIN}} editor
+    cmd: go run {{.MAIN}} editor {{.CLI_ARGS}}
     silent: true
   opencode:
-    cmds:
-      - go run {{.MAIN}} opencode
+    cmd: go run {{.MAIN}} opencode {{.CLI_ARGS}}
     silent: true
   claude:
-    cmds:
-      - go run {{.MAIN}} claude
+    cmd: go run {{.MAIN}} claude {{.CLI_ARGS}}
     silent: true
   codex:
-    cmds:
-      - go run {{.MAIN}} codex
+    cmd: go run {{.MAIN}} codex {{.CLI_ARGS}}
     silent: true
   quads:
-    cmds:
-      - go run {{.MAIN}} quads
+    cmd: go run {{.MAIN}} quads {{.CLI_ARGS}}
     silent: true
   dual:
-    cmds:
-      - go run {{.MAIN}} dual
+    cmd: go run {{.MAIN}} dual {{.CLI_ARGS}}
     silent: true
   git:
-    cmds:
-      - go run {{.MAIN}} git
+    cmd: go run {{.MAIN}} git {{.CLI_ARGS}}
     silent: true
   kill-all:
-    cmds:
-      - go run {{.MAIN}} kill --all
+    cmd: go run {{.MAIN}} kill --all {{.CLI_ARGS}}
+    silent: true
+  release-tag:
+    cmd: bash scripts/release-tag.sh {{.CLI_ARGS}}
+    silent: true
+  install-script:
+    cmd: bash scripts/install.sh {{.CLI_ARGS}}
     silent: true
