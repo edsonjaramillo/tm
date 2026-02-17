@@ -20,7 +20,7 @@ func TestRootCommandIncludesExpectedSubcommands(t *testing.T) {
 	}
 	sort.Strings(got)
 
-	want := []string{"claude", "codex", "detach", "dual", "editor", "git", "kill", "opencode", "quads", "start"}
+	want := []string{"claude", "codex", "detach", "dual", "editor", "git", "kill", "opencode", "quads", "start", "yazi"}
 	if len(got) != len(want) {
 		t.Fatalf("subcommand count = %d, want %d (got=%v)", len(got), len(want), got)
 	}
@@ -162,5 +162,37 @@ func TestStartCommandMapsAuxFlagWithSessionArgument(t *testing.T) {
 	}
 	if !useCases.startReq.Aux {
 		t.Fatal("startReq.Aux = false, want true")
+	}
+}
+
+func TestYaziCommandMapsDefaultRequest(t *testing.T) {
+	useCases := &fakeUseCases{}
+	cmd := newRootCmdWithUseCases(useCases)
+	cmd.SetArgs([]string{"yazi"})
+
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("cmd.Execute() error = %v, want nil", err)
+	}
+	if !useCases.yaziCalled {
+		t.Fatal("Yazi use-case was not called")
+	}
+	if useCases.yaziReq.New {
+		t.Fatal("yaziReq.New = true, want false")
+	}
+}
+
+func TestYaziCommandMapsNewFlag(t *testing.T) {
+	useCases := &fakeUseCases{}
+	cmd := newRootCmdWithUseCases(useCases)
+	cmd.SetArgs([]string{"yazi", "--new"})
+
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("cmd.Execute() error = %v, want nil", err)
+	}
+	if !useCases.yaziCalled {
+		t.Fatal("Yazi use-case was not called")
+	}
+	if !useCases.yaziReq.New {
+		t.Fatal("yaziReq.New = false, want true")
 	}
 }

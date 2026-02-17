@@ -87,6 +87,7 @@ func newRootCmdWithDependencies(useCases app.UseCases, sessions sessionLister) *
 	cmd.AddCommand(newOpencodeCmd(useCases))
 	cmd.AddCommand(newClaudeCmd(useCases))
 	cmd.AddCommand(newCodexCmd(useCases))
+	cmd.AddCommand(newYaziCmd(useCases))
 	cmd.AddCommand(newQuadsCmd(useCases))
 	cmd.AddCommand(newDualCmd(useCases))
 	cmd.AddCommand(newGitCmd(useCases))

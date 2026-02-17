@@ -410,3 +410,22 @@ func TestCodexSendsCodexBinary(t *testing.T) {
 		t.Fatalf("sentKeys[0] = %#v, want %#v", tmux.sentKeys[0], []string{"codex", "C-m"})
 	}
 }
+
+func TestYaziSendsYaziBinary(t *testing.T) {
+	t.Parallel()
+
+	tmux := &fakeTmux{}
+	system := &fakeSystem{inTmux: true}
+	svc := NewService(tmux, system)
+
+	err := svc.Yazi(WindowRequest{})
+	if err != nil {
+		t.Fatalf("Yazi(WindowRequest{}) error = %v, want nil", err)
+	}
+	if len(tmux.sentKeys) != 1 {
+		t.Fatalf("sentKeys calls = %d, want 1", len(tmux.sentKeys))
+	}
+	if !reflect.DeepEqual(tmux.sentKeys[0], []string{"yazi", "C-m"}) {
+		t.Fatalf("sentKeys[0] = %#v, want %#v", tmux.sentKeys[0], []string{"yazi", "C-m"})
+	}
+}

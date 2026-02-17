@@ -5,6 +5,7 @@ import "github.com/edsonjaramillo/tm/internal/app"
 type fakeUseCases struct {
 	startReq app.StartRequest
 	killReq  app.KillRequest
+	yaziReq  app.WindowRequest
 
 	detachCalled bool
 	startCalled  bool
@@ -16,6 +17,7 @@ type fakeUseCases struct {
 	openCalled   bool
 	claudeCalled bool
 	codexCalled  bool
+	yaziCalled   bool
 
 	err error
 }
@@ -52,6 +54,12 @@ func (f *fakeUseCases) Claude(req app.WindowRequest) error {
 func (f *fakeUseCases) Codex(req app.WindowRequest) error {
 	f.codexCalled = true
 	_ = req
+	return f.err
+}
+
+func (f *fakeUseCases) Yazi(req app.WindowRequest) error {
+	f.yaziCalled = true
+	f.yaziReq = req
 	return f.err
 }
 

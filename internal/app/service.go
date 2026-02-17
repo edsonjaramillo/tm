@@ -15,6 +15,7 @@ type UseCases interface {
 	Opencode(req WindowRequest) error
 	Claude(req WindowRequest) error
 	Codex(req WindowRequest) error
+	Yazi(req WindowRequest) error
 	Quads(req WindowRequest) error
 	Dual(req WindowRequest) error
 	Git(req WindowRequest) error
@@ -132,6 +133,19 @@ func (s *Service) Codex(req WindowRequest) error {
 		return err
 	}
 	if err := s.tmux.SendKeys("codex", "C-m"); err != nil {
+		return newExecutionError("send keys to tmux pane", err)
+	}
+	return nil
+}
+
+func (s *Service) Yazi(req WindowRequest) error {
+	if err := s.ensureTmuxSession(); err != nil {
+		return err
+	}
+	if err := s.prepareWindow("yazi", req.New); err != nil {
+		return err
+	}
+	if err := s.tmux.SendKeys("yazi", "C-m"); err != nil {
 		return newExecutionError("send keys to tmux pane", err)
 	}
 	return nil
